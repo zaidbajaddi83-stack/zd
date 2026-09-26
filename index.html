@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DileonaStreet</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    font-family:Satoshi, sans-serif;
+    color:#fff;
+}
+
+/* ===================================
+            CAPSULE NAVBAR
+=================================== */
+
+.glass{
+
+    background:#0E0E0E;
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border:2px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.55),
+    inset 0 1px rgba(255,255,255,.05);
+
+}
+
+/* ===================================
+              NAV LINKS
+=================================== */
+
+.nav-link{
+
+    position:relative;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    color:#fff;
+
+    transition:.35s;
+
+}
+
+.nav-link:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:#fff;
+
+    transform:translateX(-50%);
+
+    transition:.35s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+/* ===================================
+            ICON BUTTONS
+=================================== */
+
+.icon-btn{
+
+    width:45px;
+
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.icon-btn:hover{
+
+    background:rgba(255,255,255,.08);
+
+    transform:translateY(-2px);
+
+}
+
+/* ===================================
+                LOGO
+=================================== */
+
+.logo{
+
+    width:430px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    transition:.35s;
+
+    transform:translateY(-5px);
+
+}
+
+.logo:hover{
+
+    transform:translateY(-5px) scale(1.03);
+
+}
+
+/* ===================================
+              HERO IMAGE
+=================================== */
+.hero{
+    position: relative;
+}
+.hero img{
+
+    width:100%;
+
+    height:100vh;
+
+    object-fit:cover;
+
+    display:block;
+
+    border-bottom-left-radius:70% 140px;
+
+    border-bottom-right-radius:70% 140px;
+
+}
+.hero-content{
+    position:absolute;
+    left:50%;
+    bottom:60px;
+    transform:translateX(-50%);
+    text-align:center;
+    z-index:100;
+}
+
+.hero-title{
+    font-family:dark_college;
+    color:#fff;
+    font-size:2rem;
+    font-weight:600;
+    margin-bottom:20px;
+    text-shadow:0 4px 15px rgba(0,0,0,.5);
+}
+.btn-primary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px 42px;
+
+    color:#fff;
+    text-decoration:none;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:13px;
+    font-weight:600;
+
+    border:1px solid rgba(255,255,255,.4);
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+
+    border-radius:999px;
+
+    transition:.35s ease;
+}
+
+.btn-primary:hover{
+    background:#fff;
+    color:#111;
+    border-color:#fff;
+    transform:translateY(-3px);
+}
+/* ===================================
+        MOBILE MENU
+=================================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    visibility:hidden;
+    transition:.35s;
+    z-index:90;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.mobile-menu{
+    position:fixed;
+    top:0;
+    right:-320px;
+    width:300px;
+    max-width:85%;
+    height:100vh;
+    background:#0E0E0E;
+    border-left:1px solid rgba(255,255,255,.08);
+    transition:.4s ease;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    padding:30px;
+}
+
+.mobile-menu.active{
+    right:0;
+}
+
+.mobile-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:50px;
+}
+
+.mobile-logo{
+    width:170px;
+}
+
+.close-btn{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:34px;
+    cursor:pointer;
+}
+
+.mobile-links{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+.mobile-links a{
+    color:#fff;
+    text-decoration:none;
+    font-size:17px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.mobile-links a:hover{
+    transform:translateX(8px);
+}
+/* ===================================================
+   DILEONASTREET — SUMMER COLLECTION SECTION
+=================================================== */
+
+/* ==========================
+      MOBILE BUTTON
+========================== */
+
+.mobile-toggle{
+    display:none;
+}
+
+/* ===================================
+        TABLET
+=================================== */
+
+@media (max-width:1024px){
+
+.left-menu,
+.right-menu{
+    display:none;
+}
+
+.mobile-toggle{
+    display:block;
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.logo{
+    width:260px;
+}
+
+.hero img{
+    height:85vh;
+}
+
+.hero-title{
+    font-size:clamp(2rem,6vw,3rem);
+}
+
+}
+
+/* ===================================
+          PHONE
+=================================== */
+
+@media (max-width:768px){
+
+header{
+    top:12px !important;
+}
+
+nav{
+    height:72px !important;
+}
+
+.logo{
+    width:180px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+}
+
+.hero img{
+
+    height:78vh;
+
+    border-bottom-left-radius:55% 90px;
+
+    border-bottom-right-radius:55% 90px;
+
+}
+
+.hero-content{
+
+    width:90%;
+
+    bottom:45px;
+
+}
+
+.hero-title{
+
+    font-size:clamp(1.6rem,7vw,2.4rem);
+
+    margin-bottom:20px;
+
+}
+
+.btn-primary{
+
+    padding:14px 34px;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+}
+
+}
+
+/* ===================================
+      SMALL PHONES
+=================================== */
+
+@media (max-width:430px){
+
+.logo{
+
+    width:150px;
+
+}
+
+.hero img{
+
+    height:72vh;
+
+}
+
+.hero-title{
+
+    font-size:1.45rem;
+
+}
+
+.btn-primary{
+
+    width:100%;
+
+    max-width:230px;
+
+    justify-content:center;
+
+}
+
+}
+
+/* ===================================
+    VERY SMALL DEVICES
+=================================== */
+
+@media (max-width:360px){
+
+.logo{
+
+    width:135px;
+
+}
+
+.hero-title{
+
+    font-size:1.3rem;
+
+}
+
+.btn-primary{
+
+    padding:13px 24px;
+
+    font-size:11px;
+
+}
+
+}
+
+/* ===================================
+     PREVENT HORIZONTAL SCROLL
+=================================== */
+
+html,
+body{
+
+    overflow-x:hidden;
+
+}
+
+
+/* ===================================
+   RESPONSIVE CAPSULE NAVBAR — FIXES
+=================================== */
+header {
+    width: min(94%, 1750px);
+    z-index: 110;
+}
+
+.navbar {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 96px;
+    min-height: 96px;
+    border-radius: 9999px;
+}
+
+.logo-wrap {
+    z-index: 20;
+}
+
+.mobile-toggle {
+    z-index: 25;
+}
+
+.mobile-toggle button,
+.close-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-menu {
+    right: 0;
+    width: min(320px, 88vw);
+    height: 100vh;
+    height: 100dvh;
+    padding: max(24px, env(safe-area-inset-top)) 26px max(24px, env(safe-area-inset-bottom));
+    border-radius: 22px 0 0 22px;
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform .38s cubic-bezier(.2,.8,.2,1), visibility .38s;
+    overscroll-behavior: contain;
+}
+
+.mobile-menu.active {
+    right: 0;
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.overlay {
+    z-index: 100;
+}
+
+.mobile-menu {
+    z-index: 105;
+}
+
+@media (max-width: 1024px) {
+    header {
+        top: 16px !important;
+        width: calc(100% - 32px) !important;
+    }
+
+    /* Tailwind's .flex utility otherwise overrides the mobile hide rule. */
+    .navbar .left-menu,
+    .navbar .right-menu {
+        display: none !important;
+    }
+
+    nav.navbar {
+        height: 76px !important;
+        min-height: 76px;
+    }
+
+    .logo-wrap {
+        left: 20px !important;
+        right: auto !important;
+        transform: translateY(-50%) !important;
+    }
+
+    .logo {
+        width: clamp(145px, 24vw, 230px);
+        transform: none;
+    }
+
+    .logo:hover {
+        transform: scale(1.02);
+    }
+
+    .mobile-toggle {
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        top: 12px !important;
+        width: calc(100% - 24px) !important;
+    }
+
+    nav.navbar {
+        height: 68px !important;
+        min-height: 68px;
+        border-width: 1px;
+    }
+
+    .logo-wrap {
+        left: 15px !important;
+    }
+
+    .logo {
+        width: clamp(124px, 38vw, 170px);
+        max-width: calc(100vw - 100px);
+    }
+
+    .mobile-toggle {
+        right: 8px;
+    }
+
+    .icon-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mobile-header {
+        margin-bottom: 38px;
+    }
+}
+
+@media (max-width: 360px) {
+    header {
+        width: calc(100% - 18px) !important;
+    }
+
+    .logo-wrap {
+        left: 12px !important;
+    }
+
+    .logo {
+        width: 124px;
+    }
+
+    .mobile-toggle {
+        right: 6px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .overlay,
+    .nav-link,
+    .icon-btn {
+        transition-duration: .01ms !important;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+        MOBILE SIDEBAR
+========================= -->
+
+<div id="overlay" class="overlay" aria-hidden="true"></div>
+
+<aside id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true">
+
+    <div class="mobile-header">
+
+        <img src="dileonastreet.png" alt="Logo" class="mobile-logo">
+
+        <button id="closeMenu" class="close-btn" type="button" aria-label="Close navigation">&times;</button>
+
+    </div>
+
+    <nav class="mobile-links">
+
+        <a href="#">New In</a>
+        <a href="#">Collection</a>
+        <a href="#">Shop</a>
+        <a href="#">Journal</a>
+        <a href="#">About Us</a>
+        <a href="login.html" aria-label="Sign in to your account">Sign In</a>
+
+    </nav>
+
+</aside>
+
+<!-- =========================
+            NAVBAR
+========================= -->
+
+<header class="fixed top-6 left-1/2 -translate-x-1/2 w-[94%] max-w-[1750px] z-50">
+
+<nav class="glass navbar">
+
+<!-- =========================
+            LOGO
+========================= -->
+
+<div class="logo-wrap absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+
+<a href="index.html">
+
+<img
+src="dileonastreet.png"
+class="logo"
+alt="DileonaStreet">
+
+</a>
+
+</div>
+
+<!-- =========================
+        LEFT MENU
+========================= -->
+
+<div class="left-menu absolute left-10 top-1/2 -translate-y-1/2 flex items-center gap-8">
+
+    <a href="login.html" class="icon-btn account-link" aria-label="Sign in" title="Sign in">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        viewBox="0 0 24 24" aria-hidden="true">
+
+            <path d="M20 21a8 8 0 0 0-16 0"/>
+            <circle cx="12" cy="7" r="4"/>
+
+        </svg>
+
+    </a>
+
+    <button class="icon-btn">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        viewBox="0 0 24 24">
+
+            <path d="M6 7V6a4 4 0 0 1 8 0v1"/>
+            <path d="M3 7h18l-1 13H4L3 7Z"/>
+
+        </svg>
+
+    </button>
+
+    <a href="#" class="nav-link">Journal</a>
+    <a href="#" class="nav-link">About Us</a>
+
+</div>
+
+<!-- =========================
+        RIGHT MENU
+========================= -->
+
+<div class="right-menu absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-9">
+
+    <a href="#" class="nav-link">Collection</a>
+    <a href="#" class="nav-link">Shop</a>
+    <a href="#" class="nav-link">New In</a>
+
+</div>
+
+<!-- =========================
+      MOBILE HAMBURGER
+========================= -->
+
+<div class="mobile-toggle">
+
+    <button id="openMenu" class="icon-btn" type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24">
+
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+
+        </svg>
+
+    </button>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- =========================
+        HERO SECTION
+========================= -->
+
+<section class="hero">
+
+    <img
+    src="Hero-Collections-Dileonastreet.png"
+    alt="Hero Image">
+
+    <div class="hero-content">
+
+        <h1 class="hero-title">
+            Dileona Heritage Hoodie
+        </h1>
+
+        <a href="#" class="btn-primary">
+            Shop Now
+        </a>
+
+    </div>
+
+</section>
+<section class="collection-section">
+
+    <!-- decorative faint wave in the background, sits above the
+         empty background layer but under everything else -->
+    <svg class="bg-wave" viewBox="0 0 1600 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-100,760 C300,680 700,860 1000,740 C1250,650 1450,760 1700,700 L1700,900 L-100,900 Z"
+              fill="rgba(255,255,255,0.035)"/>
+        <path d="M-100,800 C350,730 750,890 1050,780 C1300,690 1500,790 1700,740 L1700,900 L-100,900 Z"
+              fill="rgba(255,255,255,0.05)"/>
+    </svg>
+
+    <!-- HEADER -->
+    <div class="section-header">
+        <h2>Dileonastreet — Summer Collection :</h2>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards-grid">
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+    </div>
+
+</section>
+
+
+
+<script>
+(() => {
+    const menu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+    const openButton = document.getElementById('openMenu');
+    const closeButton = document.getElementById('closeMenu');
+    if (!menu || !overlay || !openButton || !closeButton) return;
+
+    const setMenuOpen = (isOpen) => {
+        menu.classList.toggle('active', isOpen);
+        overlay.classList.toggle('active', isOpen);
+        menu.setAttribute('aria-hidden', String(!isOpen));
+        openButton.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (isOpen) closeButton.focus();
+        else openButton.focus();
+    };
+
+    openButton.addEventListener('click', () => setMenuOpen(true));
+    closeButton.addEventListener('click', () => setMenuOpen(false));
+    overlay.addEventListener('click', () => setMenuOpen(false));
+    menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuOpen(false));
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.classList.contains('active')) {
+            setMenuOpen(false);
+        }
+    });
+})();
+</script>
+
+</body>
+
+</html>
