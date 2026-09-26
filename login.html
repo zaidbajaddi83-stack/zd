@@ -95,7 +95,7 @@
     .social a[aria-label="Scan QR code"]:hover { color: #fff; }
     .visual-panel {
       position: relative; min-height: 520px; overflow: hidden;
-      background-color: #332719; background-image: url('Background Dileonastreet.png'); background-position: center; background-size: contain; background-repeat: no-repeat;
+      background: #332719 url('Background Dileonastreet.png') center/cover no-repeat;
     }
     .visual-panel::before {
       content: ''; position: absolute; inset: 0;
@@ -111,10 +111,7 @@
         display: block;
         order: -1;
         width: 100%;
-        height: auto;
-        min-height: 0;
-        aspect-ratio: 16 / 9;
-        background-size: contain;
+        min-height: clamp(160px, 44vw, 225px);
       }
       .form-panel { padding: 38px 32px; }
     }
@@ -154,10 +151,7 @@
         display: block;
         order: -1;
         width: 100%;
-        height: auto;
-        min-height: 0;
-        aspect-ratio: 16 / 9;
-        background-size: contain;
+        min-height: clamp(160px, 44vw, 225px);
       }
       .form-panel { min-width: 0; padding: clamp(28px, 7vw, 42px) clamp(20px, 7vw, 34px); }
       .form-box { min-width: 0; }
