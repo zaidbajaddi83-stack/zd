@@ -1,293 +1,877 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#171512">
-  <title>DILEONASTREET | Login & Sign Up</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <style>
-    :root {
-      --gold: #d4af37;
-      --gold-dark: #a98216;
-      --ink: #22211e;
-      --muted: #85837e;
-      --line: #e8e6e1;
-      --white: #fff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 28px;
-      display: grid;
-      place-items: center;
-      color: var(--ink);
-      font-family: 'Poppins', sans-serif;
-      background: #171512 url('Background.png') center/cover fixed no-repeat;
-    }
-    .auth-card {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(360px, 460px) minmax(0, 1fr);
-      width: min(1190px, 100%);
-      min-height: min(740px, calc(100vh - 56px));
-      overflow: hidden;
-      border-radius: 28px;
-      background: var(--white);
-      box-shadow: 0 30px 80px #0005;
-      animation: appear .65s ease both;
-    }
-    .form-panel {
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 52px;
-      background: #fff;
-    }
-    .form-box { width: 100%; max-width: 340px; }
-    h1 { margin: 0; font-size: clamp(28px, 3vw, 35px); font-weight: 700; letter-spacing: -.8px; }
-    .intro { margin: 8px 0 27px; color: var(--muted); font-size: 13px; line-height: 1.7; }
-    .auth-form { display: grid; gap: 16px; }
-    .field { position: relative; }
-    .field label { display: block; margin-bottom: 6px; color: #55534e; font-size: 12px; font-weight: 500; }
-    .field input {
-      width: 100%; height: 48px; padding: 0 14px;
-      border: 1px solid var(--line); border-radius: 10px;
-      outline: 0; background: #fff; color: var(--ink);
-      font: inherit; font-size: 13px; transition: border-color .2s, box-shadow .2s;
-    }
-    .field input::placeholder { color: #aaa8a2; }
-    .field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px #d4af371c; }
-    .password-wrap input { padding-right: 46px; }
-    .password-toggle {
-      position: absolute; right: 13px; bottom: 13px; padding: 0;
-      border: 0; background: transparent; color: #777; cursor: pointer; font-size: 17px;
-    }
-    .form-options { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -2px 0 1px; font-size: 11px; }
-    .remember { display: inline-flex; align-items: center; gap: 7px; color: #66645f; }
-    .remember input { accent-color: var(--gold-dark); }
-    .text-link { color: var(--gold-dark); text-decoration: none; font-weight: 600; }
-    .text-link:hover { text-decoration: underline; }
-    .submit-btn {
-      min-height: 50px; margin-top: 2px; border: 0; border-radius: 999px;
-      color: #fff; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      box-shadow: 0 8px 20px #a982162b; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px #a9821640; }
-    .switch-copy { margin: 18px 0 0; text-align: center; color: #77746e; font-size: 12px; }
-    .divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 15px; color: #92908b; font-size: 11px; white-space: nowrap; }
-    .divider::before, .divider::after { content: ''; height: 1px; flex: 1; background: var(--line); }
-    .social { display: flex; justify-content: center; gap: 13px; }
-    .social a {
-      width: 43px; height: 43px; display: grid; place-items: center;
-      border: 1px solid var(--line); border-radius: 50%; color: #393833;
-      background: #fff; text-decoration: none; font-size: 17px;
-      box-shadow: 0 4px 12px #0000000a; transition: .2s;
-    }
-    .social a:hover { transform: translateY(-3px); color: #fff; border-color: var(--gold-dark); background: var(--gold-dark); }
-    .social a[aria-label="Scan QR code"] { color: var(--gold-dark); }
-    .social a[aria-label="Scan QR code"]:hover { color: #fff; }
-    .visual-panel {
-      position: relative; min-height: 520px; overflow: hidden;
-      background: #332719 url('Background Dileonastreet.png') center/cover no-repeat;
-    }
-    .visual-panel::before {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(0, 0, 0, .08);
-    }
-    .flash-message { min-height: 18px; margin: 10px 0 0; text-align: center; color: #6a581e; font-size: 11px; }
-    [hidden] { display: none !important; }
-    @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 800px) {
-      body { padding: 18px; }
-      .auth-card { grid-template-columns: minmax(0, 1fr); width: min(480px, 100%); min-height: 0; }
-      .visual-panel { display: none; }
-      .form-panel { padding: 38px 32px; }
-    }
-    @media (max-width: 390px) {
-      body { padding: 10px; }
-      .form-panel { padding: 30px 22px; }
-      .auth-card { border-radius: 20px; }
-      .form-options { font-size: 10px; }
-    }
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DileonaStreet</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    font-family:Satoshi, sans-serif;
+    color:#fff;
+}
+
+/* ===================================
+            CAPSULE NAVBAR
+=================================== */
+
+.glass{
+
+    background:#0E0E0E;
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border:2px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.55),
+    inset 0 1px rgba(255,255,255,.05);
+
+}
+
+/* ===================================
+              NAV LINKS
+=================================== */
+
+.nav-link{
+
+    position:relative;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    color:#fff;
+
+    transition:.35s;
+
+}
+
+.nav-link:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-7px;
+
+    width:0;
+
+    height:2px;
+
+    background:#fff;
+
+    transform:translateX(-50%);
+
+    transition:.35s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+/* ===================================
+            ICON BUTTONS
+=================================== */
+
+.icon-btn{
+
+    width:45px;
+
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.icon-btn:hover{
+
+    background:rgba(255,255,255,.08);
+
+    transform:translateY(-2px);
+
+}
+
+/* ===================================
+                LOGO
+=================================== */
+
+.logo{
+
+    width:430px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+    transition:.35s;
+
+    transform:translateY(-5px);
+
+}
+
+.logo:hover{
+
+    transform:translateY(-5px) scale(1.03);
+
+}
+
+/* ===================================
+              HERO IMAGE
+=================================== */
+.hero{
+    position: relative;
+}
+.hero img{
+
+    width:100%;
+
+    height:100vh;
+
+    object-fit:cover;
+
+    display:block;
+
+    border-bottom-left-radius:70% 140px;
+
+    border-bottom-right-radius:70% 140px;
+
+}
+.hero-content{
+    position:absolute;
+    left:50%;
+    bottom:60px;
+    transform:translateX(-50%);
+    text-align:center;
+    z-index:100;
+}
+
+.hero-title{
+    font-family:dark_college;
+    color:#fff;
+    font-size:2rem;
+    font-weight:600;
+    margin-bottom:20px;
+    text-shadow:0 4px 15px rgba(0,0,0,.5);
+}
+.btn-primary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px 42px;
+
+    color:#fff;
+    text-decoration:none;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:13px;
+    font-weight:600;
+
+    border:1px solid rgba(255,255,255,.4);
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+
+    border-radius:999px;
+
+    transition:.35s ease;
+}
+
+.btn-primary:hover{
+    background:#fff;
+    color:#111;
+    border-color:#fff;
+    transform:translateY(-3px);
+}
+/* ===================================
+        MOBILE MENU
+=================================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    visibility:hidden;
+    transition:.35s;
+    z-index:90;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.mobile-menu{
+    position:fixed;
+    top:0;
+    right:-320px;
+    width:300px;
+    max-width:85%;
+    height:100vh;
+    background:#0E0E0E;
+    border-left:1px solid rgba(255,255,255,.08);
+    transition:.4s ease;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    padding:30px;
+}
+
+.mobile-menu.active{
+    right:0;
+}
+
+.mobile-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:50px;
+}
+
+.mobile-logo{
+    width:170px;
+}
+
+.close-btn{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:34px;
+    cursor:pointer;
+}
+
+.mobile-links{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+.mobile-links a{
+    color:#fff;
+    text-decoration:none;
+    font-size:17px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.mobile-links a:hover{
+    transform:translateX(8px);
+}
+/* ===================================================
+   DILEONASTREET — SUMMER COLLECTION SECTION
+=================================================== */
+
+/* ==========================
+      MOBILE BUTTON
+========================== */
+
+.mobile-toggle{
+    display:none;
+}
+
+/* ===================================
+        TABLET
+=================================== */
+
+@media (max-width:1024px){
+
+.left-menu,
+.right-menu{
+    display:none;
+}
+
+.mobile-toggle{
+    display:block;
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.logo{
+    width:260px;
+}
+
+.hero img{
+    height:85vh;
+}
+
+.hero-title{
+    font-size:clamp(2rem,6vw,3rem);
+}
+
+}
+
+/* ===================================
+          PHONE
+=================================== */
+
+@media (max-width:768px){
+
+header{
+    top:12px !important;
+}
+
+nav{
+    height:72px !important;
+}
+
+.logo{
+    width:180px;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+}
+
+.hero img{
+
+    height:78vh;
+
+    border-bottom-left-radius:55% 90px;
+
+    border-bottom-right-radius:55% 90px;
+
+}
+
+.hero-content{
+
+    width:90%;
+
+    bottom:45px;
+
+}
+
+.hero-title{
+
+    font-size:clamp(1.6rem,7vw,2.4rem);
+
+    margin-bottom:20px;
+
+}
+
+.btn-primary{
+
+    padding:14px 34px;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+}
+
+}
+
+/* ===================================
+      SMALL PHONES
+=================================== */
+
+@media (max-width:430px){
+
+.logo{
+
+    width:150px;
+
+}
+
+.hero img{
+
+    height:72vh;
+
+}
+
+.hero-title{
+
+    font-size:1.45rem;
+
+}
+
+.btn-primary{
+
+    width:100%;
+
+    max-width:230px;
+
+    justify-content:center;
+
+}
+
+}
+
+/* ===================================
+    VERY SMALL DEVICES
+=================================== */
+
+@media (max-width:360px){
+
+.logo{
+
+    width:135px;
+
+}
+
+.hero-title{
+
+    font-size:1.3rem;
+
+}
+
+.btn-primary{
+
+    padding:13px 24px;
+
+    font-size:11px;
+
+}
+
+}
+
+/* ===================================
+     PREVENT HORIZONTAL SCROLL
+=================================== */
+
+html,
+body{
+
+    overflow-x:hidden;
+
+}
 
 
-    /* Mobile-first refinements: keep the form readable and scrollable. */
-    @media (max-width: 800px) {
-      body {
-        min-height: 100svh;
-        padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
-        place-items: start center;
-      }
-      .auth-card {
-        width: min(480px, 100%);
-        min-height: 0;
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .visual-panel { display: none; }
-      .form-panel { min-width: 0; padding: clamp(28px, 7vw, 42px) clamp(20px, 7vw, 34px); }
-      .form-box { min-width: 0; }
+/* ===================================
+   RESPONSIVE CAPSULE NAVBAR — FIXES
+=================================== */
+header {
+    width: min(94%, 1750px);
+    z-index: 110;
+}
+
+.navbar {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 96px;
+    min-height: 96px;
+    border-radius: 9999px;
+}
+
+.logo-wrap {
+    z-index: 20;
+}
+
+.mobile-toggle {
+    z-index: 25;
+}
+
+.mobile-toggle button,
+.close-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-menu {
+    right: 0;
+    width: min(320px, 88vw);
+    height: 100vh;
+    height: 100dvh;
+    padding: max(24px, env(safe-area-inset-top)) 26px max(24px, env(safe-area-inset-bottom));
+    border-radius: 22px 0 0 22px;
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform .38s cubic-bezier(.2,.8,.2,1), visibility .38s;
+    overscroll-behavior: contain;
+}
+
+.mobile-menu.active {
+    right: 0;
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.overlay {
+    z-index: 100;
+}
+
+.mobile-menu {
+    z-index: 105;
+}
+
+@media (max-width: 1024px) {
+    header {
+        top: 16px !important;
+        width: calc(100% - 32px) !important;
     }
 
-    @media (max-width: 480px) {
-      body { padding-left: 12px; padding-right: 12px; }
-      .auth-card { border-radius: 22px; }
-      .form-panel { padding: 28px clamp(18px, 6vw, 26px); }
-      h1 { font-size: clamp(26px, 8vw, 32px); }
-      .intro { margin: 7px 0 22px; font-size: 12px; }
-      .auth-form { gap: 14px; }
-      .field input { height: 50px; font-size: 16px; }
-      .form-options { flex-wrap: wrap; row-gap: 10px; font-size: 11px; }
-      .submit-btn { width: 100%; min-height: 50px; }
-      .divider { margin-top: 20px; }
-      .social { flex-wrap: wrap; }
+    /* Tailwind's .flex utility otherwise overrides the mobile hide rule. */
+    .navbar .left-menu,
+    .navbar .right-menu {
+        display: none !important;
     }
 
-    @media (max-width: 350px) {
-      body { padding-left: 9px; padding-right: 9px; }
-      .form-panel { padding-left: 17px; padding-right: 17px; }
-      .form-options { align-items: flex-start; }
+    nav.navbar {
+        height: 76px !important;
+        min-height: 76px;
     }
 
-    @media (max-width: 800px) and (max-height: 650px) {
-      body { place-items: start center; }
-      .form-panel { padding-top: 22px; padding-bottom: 22px; }
-      .intro { margin-bottom: 16px; }
-      .auth-form { gap: 11px; }
-      .divider { margin-top: 14px; margin-bottom: 10px; }
-      .switch-copy { margin-top: 12px; }
+    .logo-wrap {
+        left: 20px !important;
+        right: auto !important;
+        transform: translateY(-50%) !important;
     }
 
-  </style>
+    .logo {
+        width: clamp(145px, 24vw, 230px);
+        transform: none;
+    }
+
+    .logo:hover {
+        transform: scale(1.02);
+    }
+
+    .mobile-toggle {
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        top: 12px !important;
+        width: calc(100% - 24px) !important;
+    }
+
+    nav.navbar {
+        height: 68px !important;
+        min-height: 68px;
+        border-width: 1px;
+    }
+
+    .logo-wrap {
+        left: 15px !important;
+    }
+
+    .logo {
+        width: clamp(124px, 38vw, 170px);
+        max-width: calc(100vw - 100px);
+    }
+
+    .mobile-toggle {
+        right: 8px;
+    }
+
+    .icon-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mobile-header {
+        margin-bottom: 38px;
+    }
+}
+
+@media (max-width: 360px) {
+    header {
+        width: calc(100% - 18px) !important;
+    }
+
+    .logo-wrap {
+        left: 12px !important;
+    }
+
+    .logo {
+        width: 124px;
+    }
+
+    .mobile-toggle {
+        right: 6px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .overlay,
+    .nav-link,
+    .icon-btn {
+        transition-duration: .01ms !important;
+    }
+}
+
+</style>
+
 </head>
+
 <body>
-  <main class="auth-card">
-    <section class="form-panel" aria-label="Account access">
-      <div class="form-box">
-        <h1 id="form-title">WELCOME BACK</h1>
-        <p class="intro" id="form-intro">Sign in to your account to continue.</p>
 
-        <form class="auth-form" id="auth-form">
-          <div class="field" id="name-field" hidden>
-            <label for="full-name">Full name</label>
-            <input id="full-name" name="name" type="text" placeholder="Your full name" autocomplete="name">
-          </div>
-          <div class="field">
-            <label for="email">Email address</label>
-            <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
-          </div>
-          <div class="field password-wrap">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="Enter your password" minlength="6" autocomplete="current-password" required>
-            <button class="password-toggle" type="button" aria-label="Show password" title="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button>
-          </div>
-          <div class="field password-wrap" id="confirm-field" hidden>
-            <label for="confirm-password">Confirm password</label>
-            <input id="confirm-password" name="confirmPassword" type="password" placeholder="Re-enter your password" minlength="6" autocomplete="new-password">
-            <button class="password-toggle" type="button" aria-label="Show password" title="Show password"><i class="bi bi-eye" aria-hidden="true"></i></button>
-          </div>
-          <div class="form-options" id="login-options">
-            <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
-            <a href="#forgot-password" class="text-link" id="forgot-link">Forgot password?</a>
-          </div>
-          <button class="submit-btn" id="submit-btn" type="submit">Access Account</button>
-        </form>
+<!-- =========================
+        MOBILE SIDEBAR
+========================= -->
 
-        <p class="switch-copy"><span id="switch-prompt">Don't have an account?</span> <a href="#signup" class="text-link" id="switch-link">Sign up</a></p>
-        <p class="flash-message" id="flash-message" role="status" aria-live="polite"></p>
+<div id="overlay" class="overlay" aria-hidden="true"></div>
 
-        <div class="divider"><span>Or continue with</span></div>
-        <nav class="social" aria-label="Social links">
-          <a href="mailto:" aria-label="Gmail" title="Gmail"><i class="bi bi-google" aria-hidden="true"></i></a>
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></a>
-          <a href="#scan" id="scan-link" aria-label="Scan QR code" title="Scan QR code"><i class="bi bi-qr-code-scan" aria-hidden="true"></i></a>
-        </nav>
-      </div>
-    </section>
-    <section class="visual-panel" aria-label="Dileonastreet background image"></section>
-  </main>
-  <script>
-    (() => {
-      const form = document.querySelector('#auth-form');
-      const title = document.querySelector('#form-title');
-      const intro = document.querySelector('#form-intro');
-      const nameField = document.querySelector('#name-field');
-      const confirmField = document.querySelector('#confirm-field');
-      const nameInput = document.querySelector('#full-name');
-      const confirmInput = document.querySelector('#confirm-password');
-      const passwordInput = document.querySelector('#password');
-      const loginOptions = document.querySelector('#login-options');
-      const submitButton = document.querySelector('#submit-btn');
-      const switchPrompt = document.querySelector('#switch-prompt');
-      const switchLink = document.querySelector('#switch-link');
-      const message = document.querySelector('#flash-message');
-      const forgotLink = document.querySelector('#forgot-link');
-      const scanLink = document.querySelector('#scan-link');
-      let isSignUp = false;
+<aside id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true">
 
-      function setMode(signUp) {
-        isSignUp = signUp;
-        nameField.hidden = !signUp;
-        confirmField.hidden = !signUp;
-        nameInput.required = signUp;
-        confirmInput.required = signUp;
-        loginOptions.hidden = signUp;
-        passwordInput.autocomplete = signUp ? 'new-password' : 'current-password';
-        title.textContent = signUp ? 'CREATE ACCOUNT' : 'WELCOME BACK';
-        intro.textContent = signUp ? 'Create your account to join DILEONASTREET.' : 'Sign in to your account to continue.';
-        submitButton.textContent = signUp ? 'Create Account' : 'Access Account';
-        switchPrompt.textContent = signUp ? 'Already have an account?' : "Don't have an account?";
-        switchLink.textContent = signUp ? 'Log in' : 'Sign up';
-        switchLink.href = signUp ? '#login' : '#signup';
-        message.textContent = '';
-      }
+    <div class="mobile-header">
 
-      switchLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        setMode(!isSignUp);
-      });
+        <img src="dileonastreet.png" alt="Logo" class="mobile-logo">
 
-      document.querySelectorAll('.password-toggle').forEach((button) => {
-        button.addEventListener('click', () => {
-          const input = button.parentElement.querySelector('input');
-          const show = input.type === 'password';
-          input.type = show ? 'text' : 'password';
-          button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-          button.title = show ? 'Hide password' : 'Show password';
-          button.innerHTML = `<i class="bi ${show ? 'bi-eye-slash' : 'bi-eye'}" aria-hidden="true"></i>`;
-        });
-      });
+        <button id="closeMenu" class="close-btn" type="button" aria-label="Close navigation">&times;</button>
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (isSignUp && passwordInput.value !== confirmInput.value) {
-          confirmInput.setCustomValidity('Passwords do not match.');
-          confirmInput.reportValidity();
-          confirmInput.setCustomValidity('');
-          return;
+    </div>
+
+    <nav class="mobile-links">
+
+        <a href="#">New In</a>
+        <a href="#">Collection</a>
+        <a href="#">Shop</a>
+        <a href="#">Journal</a>
+        <a href="#">About Us</a>
+        <a href="login.html" aria-label="Sign in to your account">Sign In</a>
+
+    </nav>
+
+</aside>
+
+<!-- =========================
+            NAVBAR
+========================= -->
+
+<header class="fixed top-6 left-1/2 -translate-x-1/2 w-[94%] max-w-[1750px] z-50">
+
+<nav class="glass navbar">
+
+<!-- =========================
+            LOGO
+========================= -->
+
+<div class="logo-wrap absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+
+<a href="index.html">
+
+<img
+src="dileonastreet.png"
+class="logo"
+alt="DileonaStreet">
+
+</a>
+
+</div>
+
+<!-- =========================
+        LEFT MENU
+========================= -->
+
+<div class="left-menu absolute left-10 top-1/2 -translate-y-1/2 flex items-center gap-8">
+
+    <a href="login.html" class="icon-btn account-link" aria-label="Sign in" title="Sign in">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        viewBox="0 0 24 24" aria-hidden="true">
+
+            <path d="M20 21a8 8 0 0 0-16 0"/>
+            <circle cx="12" cy="7" r="4"/>
+
+        </svg>
+
+    </a>
+
+    <button class="icon-btn">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        viewBox="0 0 24 24">
+
+            <path d="M6 7V6a4 4 0 0 1 8 0v1"/>
+            <path d="M3 7h18l-1 13H4L3 7Z"/>
+
+        </svg>
+
+    </button>
+
+    <a href="#" class="nav-link">Journal</a>
+    <a href="#" class="nav-link">About Us</a>
+
+</div>
+
+<!-- =========================
+        RIGHT MENU
+========================= -->
+
+<div class="right-menu absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-9">
+
+    <a href="#" class="nav-link">Collection</a>
+    <a href="#" class="nav-link">Shop</a>
+    <a href="#" class="nav-link">New In</a>
+
+</div>
+
+<!-- =========================
+      MOBILE HAMBURGER
+========================= -->
+
+<div class="mobile-toggle">
+
+    <button id="openMenu" class="icon-btn" type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24">
+
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+
+        </svg>
+
+    </button>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- =========================
+        HERO SECTION
+========================= -->
+
+<section class="hero">
+
+    <img
+    src="Hero-Collections-Dileonastreet.png"
+    alt="Hero Image">
+
+    <div class="hero-content">
+
+        <h1 class="hero-title">
+            Dileona Heritage Hoodie
+        </h1>
+
+        <a href="#" class="btn-primary">
+            Shop Now
+        </a>
+
+    </div>
+
+</section>
+<section class="collection-section">
+
+    <!-- decorative faint wave in the background, sits above the
+         empty background layer but under everything else -->
+    <svg class="bg-wave" viewBox="0 0 1600 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-100,760 C300,680 700,860 1000,740 C1250,650 1450,760 1700,700 L1700,900 L-100,900 Z"
+              fill="rgba(255,255,255,0.035)"/>
+        <path d="M-100,800 C350,730 750,890 1050,780 C1300,690 1500,790 1700,740 L1700,900 L-100,900 Z"
+              fill="rgba(255,255,255,0.05)"/>
+    </svg>
+
+    <!-- HEADER -->
+    <div class="section-header">
+        <h2>Dileonastreet — Summer Collection :</h2>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards-grid">
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+        <div class="product-card"></div>
+    </div>
+
+</section>
+
+
+
+<script>
+(() => {
+    const menu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+    const openButton = document.getElementById('openMenu');
+    const closeButton = document.getElementById('closeMenu');
+    if (!menu || !overlay || !openButton || !closeButton) return;
+
+    const setMenuOpen = (isOpen) => {
+        menu.classList.toggle('active', isOpen);
+        overlay.classList.toggle('active', isOpen);
+        menu.setAttribute('aria-hidden', String(!isOpen));
+        openButton.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (isOpen) closeButton.focus();
+        else openButton.focus();
+    };
+
+    openButton.addEventListener('click', () => setMenuOpen(true));
+    closeButton.addEventListener('click', () => setMenuOpen(false));
+    overlay.addEventListener('click', () => setMenuOpen(false));
+    menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuOpen(false));
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.classList.contains('active')) {
+            setMenuOpen(false);
         }
-        message.textContent = isSignUp
-          ? 'Account details are valid. Connect this form to your authentication service to create the account.'
-          : 'Sign-in details are valid. Connect this form to your authentication service to continue.';
-      });
+    });
+})();
+</script>
 
-      forgotLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        message.textContent = 'Password recovery needs to be connected to your authentication service.';
-      });
-
-      scanLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        message.textContent = 'Connect this QR button to your QR scanner or sign-in link.';
-      });
-    })();
-  </script>
 </body>
+
 </html>
